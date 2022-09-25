@@ -1,57 +1,27 @@
 package com.callforcode.agridist.entities;
-import javax.persistence.*;
 
-@Entity
-@Table(name = "user")
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class User {
-    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "user_id")
-    private Integer id;
-    private String name;
-    private int age;
+//    user
+//
+//    username - varchar - unique name of user
+//    password - varchar - password hashed
+//    emailid - varchar - verified email id
+//    mobileno - int - verified mobile no.
+//    active - bool - user active or not
+//    mobileno_verified - bool
+//    emailid_verified - bool
 
-    public User() {
-
-    }
-    public User(Integer id, String name, int age) {
-        super();
-        this.id = id;
-        this.name = name;
-        this.age = age;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                '}';
-    }
+    private int user_id;
+    private String username;
+    private String password_hash;
+    private String emailid;
+    private int mobileno;
+    private boolean active;
+    private boolean mobileno_verified;
+    private boolean emailid_verified;
 }

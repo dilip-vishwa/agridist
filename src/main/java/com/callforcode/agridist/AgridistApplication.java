@@ -1,7 +1,7 @@
 package com.callforcode.agridist;
 
-import com.callforcode.agridist.dao.UserRepository;
-import com.callforcode.agridist.entities.User;
+//import com.callforcode.agridist.dao.UserRepository;
+//import com.callforcode.agridist.entities.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -16,7 +16,7 @@ public class AgridistApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(AgridistApplication.class, args);
-		UserRepository userRepository = context.getBean(UserRepository.class);
+//		UserRepository userRepository = context.getBean(UserRepository.class);
 //		User user = new User();
 //		user.setName("XYZ");
 //		user.setAge(23);
