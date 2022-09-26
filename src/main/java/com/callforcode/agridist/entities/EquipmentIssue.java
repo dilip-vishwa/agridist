@@ -18,8 +18,9 @@ public class EquipmentIssue {
 //    user_who_verified_issue_fixed - fk(user)
 //    is_verified_by_user - bool
 
-    private int user_id;
-    private int equipment_id;
+    private String equipmentIssue_id;
+    private String user_id;
+    private String equipment_id;
     private String issue_subject;
     private String issue_description;
     private int issue_status;

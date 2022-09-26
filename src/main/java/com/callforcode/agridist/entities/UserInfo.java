@@ -13,7 +13,8 @@ public class UserInfo {
 //    location - varchar - geohash
 //    pincode - int
 
-    private int user_id;
+    private String userInfo_id;
+    private String user_id;
     private String address;
     private String location;
     private int pincode;

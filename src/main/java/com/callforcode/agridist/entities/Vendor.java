@@ -10,6 +10,7 @@ public class Vendor {
 //
 //    name
 //    address
+    private String vendor_id;
     private String name;
     private String address;
 }

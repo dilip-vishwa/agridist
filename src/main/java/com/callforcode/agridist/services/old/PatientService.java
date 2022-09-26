@@ -1,5 +1,5 @@
-package com.callforcode.agridist.services;
-import com.callforcode.agridist.entities.Patient;
+package com.callforcode.agridist.services.old;
+import com.callforcode.agridist.entities.old.Patient;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
@@ -17,7 +17,8 @@ public class PatientService {
 
     public String savePatientDetails(Patient patient) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(patient.getName()).set(patient);
+        String id = dbFirestore.collection(COL_NAME).document().getId();
+        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(id).set(patient);
         return collectionsApiFuture.get().getUpdateTime().toString();
     }
 

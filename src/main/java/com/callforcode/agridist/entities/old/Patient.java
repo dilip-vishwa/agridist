@@ -1,4 +1,4 @@
-package com.callforcode.agridist.entities;
+package com.callforcode.agridist.entities.old;
 
 import lombok.Getter;
 import lombok.Setter;

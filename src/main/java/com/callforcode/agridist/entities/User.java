@@ -16,7 +16,8 @@ public class User {
 //    mobileno_verified - bool
 //    emailid_verified - bool
 
-    private int user_id;
+    private String user_id;
+    private String name;
     private String username;
     private String password_hash;
     private String emailid;

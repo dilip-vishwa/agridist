@@ -1,7 +1,7 @@
-package com.callforcode.agridist;
+package com.callforcode.agridist.old;
 
-import com.callforcode.agridist.entities.Patient;
-import com.callforcode.agridist.services.PatientService;
+import com.callforcode.agridist.entities.old.Patient;
+import com.callforcode.agridist.services.old.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

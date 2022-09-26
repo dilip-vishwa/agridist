@@ -10,6 +10,7 @@ public class EquipmentCategory {
 //
 //    name - varchar - name of category like tractor
 //    description - varchar - description of category
+    private String equipmentCategory_id;
     private String name;
     private String description;
 }

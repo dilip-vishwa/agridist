@@ -15,7 +15,8 @@ public class Document {
 //    document_verified_by - varchar - the person name who verified doc.
 //    document_verified_by_org - varchar - the org name who verified doc.
 
-    private int user_id;
+    private String document_id;
+    private String user_id;
     private int document_type_given;
     private String document_path;
     private boolean document_verified;

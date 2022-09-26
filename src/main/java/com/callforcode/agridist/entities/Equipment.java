@@ -12,8 +12,9 @@ public class Equipment {
 //    category - fk(equipment)
 //    vendor_id - fk(vendor)
 
+    private String equipment_id;
     private String name;
-    private int category_id;
-    private int vendor_id;
+    private String category_id;
+    private String vendor_id;
 
 }

@@ -13,7 +13,8 @@ public class Hire {
 //    end_datetime - datetime
 //    hire_at - varchar - geohash - if user do not want to hire for base location i.e. user's address
 
-    private int user_id;
+    private String hire_id;
+    private String user_id;
     private String start_datetime;
     private String end_datetime;
     private String hire_at;
