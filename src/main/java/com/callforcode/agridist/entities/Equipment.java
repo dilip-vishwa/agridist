@@ -14,7 +14,8 @@ public class Equipment {
 
     private String equipment_id;
     private String name;
+    private String picture_url;
+    private String location;
     private String category_id;
     private String vendor_id;
-
 }

@@ -45,7 +45,7 @@ public class EquipmentService {
     public List<Equipment> getEquipmentDetailsByName(String name) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
 //        Query queryReference = dbFirestore.collection(COL_NAME).whereEqualTo("name", name);
-        Query queryReference = dbFirestore.collection(COL_NAME).orderBy("name", Query.Direction.valueOf("ASCENDING")).startAt(name.toUpperCase()).endAt(name.toLowerCase()+ "\uf8ff");
+        Query queryReference = dbFirestore.collection(COL_NAME).orderBy("name", Query.Direction.valueOf("ASCENDING")).startAt(name).endAt(name+ "\uf8ff");
 
         ApiFuture<QuerySnapshot> future = queryReference.get();
         List<Equipment> equipmentList = new ArrayList<>();

@@ -5,6 +5,7 @@ package com.callforcode.agridist;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+//import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 @SpringBootApplication
+//@EnableSwagger2
 public class AgridistApplication {
 
 	public static void main(String[] args) {
