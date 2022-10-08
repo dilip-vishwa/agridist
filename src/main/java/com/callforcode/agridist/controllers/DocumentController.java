@@ -29,18 +29,18 @@ public class DocumentController {
 
     @GetMapping("/document/{id}")
     public ResponseEntity<Optional<Document>> getDocument(@PathVariable String id ) throws InterruptedException, ExecutionException{
-        Optional<Document> user = documentService.getDocumentDetails(id);
-        if (user.isPresent()) {
+        Optional<Document> document = documentService.getDocumentDetails(id);
+        if (!document.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.of(Optional.of(user));
+        return ResponseEntity.of(Optional.of(document));
     }
 
     @PostMapping("/document")
     public ResponseEntity<Document> createDocument(@RequestBody Document document ) throws InterruptedException, ExecutionException {
         try{
-            Document user1 = documentService.saveDocumentDetails(document);
-            return ResponseEntity.status(HttpStatus.CREATED).body(user1);
+            Document document1 = documentService.saveDocumentDetails(document);
+            return ResponseEntity.status(HttpStatus.CREATED).body(document1);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

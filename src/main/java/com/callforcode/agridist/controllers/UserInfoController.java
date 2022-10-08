@@ -30,7 +30,7 @@ public class UserInfoController {
     @GetMapping("/userinfo/{id}")
     public ResponseEntity<Optional<UserInfo>> getUserInfo(@PathVariable String id ) throws InterruptedException, ExecutionException{
         Optional<UserInfo> userInfo = userInfoService.getUserInfoDetails(id);
-        if (userInfo.isPresent()) {
+        if (!userInfo.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.of(Optional.of(userInfo));
@@ -39,8 +39,8 @@ public class UserInfoController {
     @PostMapping("/userinfo")
     public ResponseEntity<UserInfo> createUserInfo(@RequestBody UserInfo userInfo ) throws InterruptedException, ExecutionException {
         try{
-            UserInfo user1 = userInfoService.saveUserInfoDetails(userInfo);
-            return ResponseEntity.status(HttpStatus.CREATED).body(user1);
+            UserInfo userInfo1 = userInfoService.saveUserInfoDetails(userInfo);
+            return ResponseEntity.status(HttpStatus.CREATED).body(userInfo1);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

@@ -30,7 +30,7 @@ public class LandController {
     @GetMapping("/land/{id}")
     public ResponseEntity<Optional<Land>> getLand(@PathVariable String id ) throws InterruptedException, ExecutionException{
         Optional<Land> land = landService.getLandDetails(id);
-        if (land.isPresent()) {
+        if (!land.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.of(Optional.of(land));
@@ -39,8 +39,8 @@ public class LandController {
     @PostMapping("/land")
     public ResponseEntity<Land> createLand(@RequestBody Land land ) throws InterruptedException, ExecutionException {
         try{
-            Land user1 = landService.saveLandDetails(land);
-            return ResponseEntity.status(HttpStatus.CREATED).body(user1);
+            Land land1 = landService.saveLandDetails(land);
+            return ResponseEntity.status(HttpStatus.CREATED).body(land1);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

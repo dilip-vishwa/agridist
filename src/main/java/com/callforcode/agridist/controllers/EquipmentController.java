@@ -38,7 +38,7 @@ public class EquipmentController {
     @GetMapping("/equipment/{id}")
     public ResponseEntity<Optional<Equipment>> getEquipment(@PathVariable String id ) throws InterruptedException, ExecutionException{
         Optional<Equipment> equipment = equipmentService.getEquipmentDetails(id);
-        if (equipment.isPresent()) {
+        if (!equipment.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.of(Optional.of(equipment));
@@ -47,8 +47,8 @@ public class EquipmentController {
     @PostMapping("/equipment")
     public ResponseEntity<Equipment> createEquipment(@RequestBody Equipment equipment ) throws InterruptedException, ExecutionException {
         try{
-            Equipment user1 = equipmentService.saveEquipmentDetails(equipment);
-            return ResponseEntity.status(HttpStatus.CREATED).body(user1);
+            Equipment equipment1 = equipmentService.saveEquipmentDetails(equipment);
+            return ResponseEntity.status(HttpStatus.CREATED).body(equipment1);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

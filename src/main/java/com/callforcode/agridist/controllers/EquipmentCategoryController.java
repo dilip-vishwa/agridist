@@ -32,7 +32,7 @@ public class EquipmentCategoryController {
     @GetMapping("/equipmentcategory/{id}")
     public ResponseEntity<Optional<EquipmentCategory>> getEquipmentCategory(@PathVariable String id ) throws InterruptedException, ExecutionException{
         Optional<EquipmentCategory> equipmentCategory = equipmentCategoryService.getEquipmentCategoryDetails(id);
-        if (equipmentCategory.isPresent()) {
+        if (!equipmentCategory.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.of(Optional.of(equipmentCategory));
@@ -41,8 +41,8 @@ public class EquipmentCategoryController {
     @PostMapping("/equipmentcategory")
     public ResponseEntity<EquipmentCategory> createEquipmentCategory(@RequestBody EquipmentCategory equipmentCategory ) throws InterruptedException, ExecutionException {
         try{
-            EquipmentCategory user1 = equipmentCategoryService.saveEquipmentCategoryDetails(equipmentCategory);
-            return ResponseEntity.status(HttpStatus.CREATED).body(user1);
+            EquipmentCategory equipmentCategory1 = equipmentCategoryService.saveEquipmentCategoryDetails(equipmentCategory);
+            return ResponseEntity.status(HttpStatus.CREATED).body(equipmentCategory1);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

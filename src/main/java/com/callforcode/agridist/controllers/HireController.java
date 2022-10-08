@@ -30,7 +30,7 @@ public class HireController {
     @GetMapping("/hire/{id}")
     public ResponseEntity<Optional<Hire>> getHire(@PathVariable String id ) throws InterruptedException, ExecutionException{
         Optional<Hire> hire = hireService.getHireDetails(id);
-        if (hire.isPresent()) {
+        if (!hire.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.of(Optional.of(hire));
@@ -39,8 +39,8 @@ public class HireController {
     @PostMapping("/hire")
     public ResponseEntity<Hire> createHire(@RequestBody Hire hire ) throws InterruptedException, ExecutionException {
         try{
-            Hire user1 = hireService.saveHireDetails(hire);
-            return ResponseEntity.status(HttpStatus.CREATED).body(user1);
+            Hire hire1 = hireService.saveHireDetails(hire);
+            return ResponseEntity.status(HttpStatus.CREATED).body(hire1);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
