@@ -30,7 +30,7 @@ public class HireController {
     @GetMapping("/hire/{id}")
     public ResponseEntity<Optional<Hire>> getHire(@PathVariable String id ) throws InterruptedException, ExecutionException{
         Optional<Hire> hire = hireService.getHireDetails(id);
-        if (hire.isEmpty()) {
+        if (hire.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.of(Optional.of(hire));

@@ -30,7 +30,7 @@ public class DocumentController {
     @GetMapping("/document/{id}")
     public ResponseEntity<Optional<Document>> getDocument(@PathVariable String id ) throws InterruptedException, ExecutionException{
         Optional<Document> user = documentService.getDocumentDetails(id);
-        if (user.isEmpty()) {
+        if (user.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.of(Optional.of(user));

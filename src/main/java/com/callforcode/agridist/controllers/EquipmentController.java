@@ -38,7 +38,7 @@ public class EquipmentController {
     @GetMapping("/equipment/{id}")
     public ResponseEntity<Optional<Equipment>> getEquipment(@PathVariable String id ) throws InterruptedException, ExecutionException{
         Optional<Equipment> equipment = equipmentService.getEquipmentDetails(id);
-        if (equipment.isEmpty()) {
+        if (equipment.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.of(Optional.of(equipment));

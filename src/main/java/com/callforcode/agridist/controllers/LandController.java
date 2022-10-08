@@ -30,7 +30,7 @@ public class LandController {
     @GetMapping("/land/{id}")
     public ResponseEntity<Optional<Land>> getLand(@PathVariable String id ) throws InterruptedException, ExecutionException{
         Optional<Land> land = landService.getLandDetails(id);
-        if (land.isEmpty()) {
+        if (land.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.of(Optional.of(land));

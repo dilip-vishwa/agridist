@@ -32,7 +32,7 @@ public class EquipmentCategoryController {
     @GetMapping("/equipmentcategory/{id}")
     public ResponseEntity<Optional<EquipmentCategory>> getEquipmentCategory(@PathVariable String id ) throws InterruptedException, ExecutionException{
         Optional<EquipmentCategory> equipmentCategory = equipmentCategoryService.getEquipmentCategoryDetails(id);
-        if (equipmentCategory.isEmpty()) {
+        if (equipmentCategory.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.of(Optional.of(equipmentCategory));

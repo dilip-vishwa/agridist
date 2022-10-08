@@ -30,7 +30,7 @@ public class UserInfoController {
     @GetMapping("/userinfo/{id}")
     public ResponseEntity<Optional<UserInfo>> getUserInfo(@PathVariable String id ) throws InterruptedException, ExecutionException{
         Optional<UserInfo> userInfo = userInfoService.getUserInfoDetails(id);
-        if (userInfo.isEmpty()) {
+        if (userInfo.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.of(Optional.of(userInfo));

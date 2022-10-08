@@ -29,7 +29,7 @@ public class UserController {
     @GetMapping("/user/{id}")
     public ResponseEntity<Optional<User>> getUser(@PathVariable String id ) throws InterruptedException, ExecutionException {
         Optional<User> user = userService.getUserDetails(id);
-        if (user.isEmpty()) {
+        if (user.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.of(Optional.of(user));
