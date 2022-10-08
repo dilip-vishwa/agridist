@@ -1,4 +1,5 @@
 package com.callforcode.agridist.services;
+import com.callforcode.agridist.entities.Document;
 import com.callforcode.agridist.entities.Hire;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 //CRUD operations
@@ -15,12 +17,12 @@ public class HireService {
 
     public static final String COL_NAME="hires";
 
-    public String saveHireDetails(Hire hire) throws InterruptedException, ExecutionException {
+    public Hire saveHireDetails(Hire hire) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         String id = dbFirestore.collection(COL_NAME).document().getId();
         hire.setHire_id(id);
         ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(id).set(hire);
-        return collectionsApiFuture.get().getUpdateTime().toString();
+        return hire;
     }
 
     public List<Hire> getHires() throws InterruptedException, ExecutionException {
@@ -33,21 +35,11 @@ public class HireService {
         }
         return hireList;
     }
-    public Hire getHireDetails(String id) throws InterruptedException, ExecutionException {
+    public Optional<Hire> getHireDetails(String id) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         DocumentReference documentReference = dbFirestore.collection(COL_NAME).document(id);
         ApiFuture<DocumentSnapshot> future = documentReference.get();
-
-        DocumentSnapshot document = future.get();
-
-        Hire hire = null;
-
-        if(document.exists()) {
-            hire = document.toObject(Hire.class);
-            return hire;
-        }else {
-            return null;
-        }
+        return Optional.ofNullable(future.get().toObject(Hire.class));
     }
 
     public String updateHireDetails(Hire hire, String id) throws InterruptedException, ExecutionException {

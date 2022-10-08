@@ -1,4 +1,5 @@
 package com.callforcode.agridist.services;
+import com.callforcode.agridist.entities.Document;
 import com.callforcode.agridist.entities.EquipmentCategory;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 //CRUD operations
@@ -15,12 +17,12 @@ public class EquipmentCategoryService {
 
     public static final String COL_NAME="equipmentcategorys";
 
-    public String saveEquipmentCategoryDetails(EquipmentCategory equipmentCategory) throws InterruptedException, ExecutionException {
+    public EquipmentCategory saveEquipmentCategoryDetails(EquipmentCategory equipmentCategory) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         String id = dbFirestore.collection(COL_NAME).document().getId();
         equipmentCategory.setEquipmentCategory_id(id);
         ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(id).set(equipmentCategory);
-        return collectionsApiFuture.get().getUpdateTime().toString();
+        return equipmentCategory;
     }
 
     public List<EquipmentCategory> getEquipmentCategorys() throws InterruptedException, ExecutionException {
@@ -33,21 +35,11 @@ public class EquipmentCategoryService {
         }
         return equipmentCategoryList;
     }
-    public EquipmentCategory getEquipmentCategoryDetails(String id) throws InterruptedException, ExecutionException {
+    public Optional<EquipmentCategory> getEquipmentCategoryDetails(String id) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         DocumentReference documentReference = dbFirestore.collection(COL_NAME).document(id);
         ApiFuture<DocumentSnapshot> future = documentReference.get();
-
-        DocumentSnapshot document = future.get();
-
-        EquipmentCategory equipmentCategory = null;
-
-        if(document.exists()) {
-            equipmentCategory = document.toObject(EquipmentCategory.class);
-            return equipmentCategory;
-        }else {
-            return null;
-        }
+        return Optional.ofNullable(future.get().toObject(EquipmentCategory.class));
     }
 
     public String updateEquipmentCategoryDetails(EquipmentCategory equipmentCategory, String id) throws InterruptedException, ExecutionException {

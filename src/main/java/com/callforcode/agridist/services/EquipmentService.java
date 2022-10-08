@@ -1,4 +1,5 @@
 package com.callforcode.agridist.services;
+import com.callforcode.agridist.entities.Document;
 import com.callforcode.agridist.entities.Equipment;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 //CRUD operations
@@ -15,12 +17,12 @@ public class EquipmentService {
 
     public static final String COL_NAME="equipments";
 
-    public String saveEquipmentDetails(Equipment equipment) throws InterruptedException, ExecutionException {
+    public Equipment saveEquipmentDetails(Equipment equipment) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         String id = dbFirestore.collection(COL_NAME).document().getId();
         equipment.setEquipment_id(id);
         ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(id).set(equipment);
-        return collectionsApiFuture.get().getUpdateTime().toString();
+        return equipment;
     }
 
     public List<Equipment> getEquipments() throws InterruptedException, ExecutionException {
@@ -33,21 +35,24 @@ public class EquipmentService {
         }
         return equipmentList;
     }
-    public Equipment getEquipmentDetails(String id) throws InterruptedException, ExecutionException {
+    public Optional<Equipment> getEquipmentDetails(String id) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         DocumentReference documentReference = dbFirestore.collection(COL_NAME).document(id);
         ApiFuture<DocumentSnapshot> future = documentReference.get();
+        return Optional.ofNullable(future.get().toObject(Equipment.class));
+    }
 
-        DocumentSnapshot document = future.get();
+    public List<Equipment> getEquipmentDetailsByName(String name) throws InterruptedException, ExecutionException {
+        Firestore dbFirestore = FirestoreClient.getFirestore();
+//        Query queryReference = dbFirestore.collection(COL_NAME).whereEqualTo("name", name);
+        Query queryReference = dbFirestore.collection(COL_NAME).orderBy("name", Query.Direction.valueOf("ASCENDING")).startAt(name.toUpperCase()).endAt(name.toLowerCase()+ "\uf8ff");
 
-        Equipment equipment = null;
-
-        if(document.exists()) {
-            equipment = document.toObject(Equipment.class);
-            return equipment;
-        }else {
-            return null;
+        ApiFuture<QuerySnapshot> future = queryReference.get();
+        List<Equipment> equipmentList = new ArrayList<>();
+        for (DocumentSnapshot document : future.get().getDocuments()) {
+            equipmentList.add(document.toObject(Equipment.class));
         }
+        return equipmentList;
     }
 
     public String updateEquipmentDetails(Equipment equipment, String id) throws InterruptedException, ExecutionException {

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 //CRUD operations
@@ -15,12 +16,13 @@ public class UserService {
 
     public static final String COL_NAME="users";
 
-    public String saveUserDetails(User user) throws InterruptedException, ExecutionException {
+    public User saveUserDetails(User user) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         String id = dbFirestore.collection(COL_NAME).document().getId();
         user.setUser_id(id);
         ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(id).set(user);
-        return collectionsApiFuture.get().getUpdateTime().toString();
+//        return collectionsApiFuture.get().getUpdateTime().toString();
+        return user;
     }
 
     public List<User> getUsers() throws InterruptedException, ExecutionException {
@@ -33,21 +35,12 @@ public class UserService {
         }
         return userList;
     }
-    public User getUserDetails(String id) throws InterruptedException, ExecutionException {
+
+    public Optional<User> getUserDetails(String id) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         DocumentReference documentReference = dbFirestore.collection(COL_NAME).document(id);
         ApiFuture<DocumentSnapshot> future = documentReference.get();
-
-        DocumentSnapshot document = future.get();
-
-        User user = null;
-
-        if(document.exists()) {
-            user = document.toObject(User.class);
-            return user;
-        }else {
-            return null;
-        }
+        return Optional.ofNullable(future.get().toObject(User.class));
     }
 
     public String updateUserDetails(User user, String id) throws InterruptedException, ExecutionException {

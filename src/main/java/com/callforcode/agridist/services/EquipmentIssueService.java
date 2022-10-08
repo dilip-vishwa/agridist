@@ -1,4 +1,5 @@
 package com.callforcode.agridist.services;
+import com.callforcode.agridist.entities.Document;
 import com.callforcode.agridist.entities.EquipmentIssue;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 //CRUD operations
@@ -15,12 +17,12 @@ public class EquipmentIssueService {
 
     public static final String COL_NAME="equipmentissues";
 
-    public String saveEquipmentIssueDetails(EquipmentIssue equipmentIssue) throws InterruptedException, ExecutionException {
+    public EquipmentIssue saveEquipmentIssueDetails(EquipmentIssue equipmentIssue) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         String id = dbFirestore.collection(COL_NAME).document().getId();
         equipmentIssue.setEquipmentIssue_id(id);
         ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(id).set(equipmentIssue);
-        return collectionsApiFuture.get().getUpdateTime().toString();
+        return equipmentIssue;
     }
 
     public List<EquipmentIssue> getEquipmentIssues() throws InterruptedException, ExecutionException {
@@ -33,21 +35,11 @@ public class EquipmentIssueService {
         }
         return equipmentIssueList;
     }
-    public EquipmentIssue getEquipmentIssueDetails(String id) throws InterruptedException, ExecutionException {
+    public Optional<EquipmentIssue> getEquipmentIssueDetails(String id) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         DocumentReference documentReference = dbFirestore.collection(COL_NAME).document(id);
         ApiFuture<DocumentSnapshot> future = documentReference.get();
-
-        DocumentSnapshot document = future.get();
-
-        EquipmentIssue equipmentIssue = null;
-
-        if(document.exists()) {
-            equipmentIssue = document.toObject(EquipmentIssue.class);
-            return equipmentIssue;
-        }else {
-            return null;
-        }
+        return Optional.ofNullable(future.get().toObject(EquipmentIssue.class));
     }
 
     public String updateEquipmentIssueDetails(EquipmentIssue equipmentIssue, String id) throws InterruptedException, ExecutionException {

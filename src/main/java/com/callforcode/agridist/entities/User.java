@@ -10,6 +10,7 @@ public class User {
 //
 //    username - varchar - unique name of user
 //    password - varchar - password hashed
+//    user_type - vendor, user
 //    emailid - varchar - verified email id
 //    mobileno - int - verified mobile no.
 //    active - bool - user active or not
@@ -20,6 +21,7 @@ public class User {
     private String name;
     private String username;
     private String password_hash;
+    private String user_type;
     private String emailid;
     private int mobileno;
     private boolean active;
